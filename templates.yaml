@@ -1,3 +1,4 @@
+---
 apiVersion: scaffolder.backstage.io/v1beta3
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
 kind: Template
@@ -8,9 +9,6 @@ metadata:
 spec:
   owner: user:guest
   type: app
-
-  # These parameters are used to generate the input form in the frontend, and are
-  # used to gather input data for the execution of the template.
   parameters:
     - title: Fill in some steps
       required:
@@ -46,7 +44,23 @@ spec:
         url: ./content
         values:
           name: ${{ parameters.name }}
-
+    - id: write-catalog-info
+      name: Write Catalog Info
+      action: catalog-write
+      input:
+        entity: 
+          apiVersion: backstage.io/v1alpha1
+          kind: Component
+          metadata:
+            name: ${{ parameters.name }}
+            namespace: default
+            description: The ${{ parameters.name }} service
+            annotations:
+              github.com/project-slug: ${{ parameters.repoUrl }}
+          spec:
+            type: app
+            lifecycle: production
+            owner: group:guests
     # This step publishes the contents of the working directory to GitHub.
     - id: publish
       name: Publish
