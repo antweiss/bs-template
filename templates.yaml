@@ -42,6 +42,7 @@ spec:
       action: fetch:template
       input:
         url: ./express
+        templateFileExtension: true
         values:
           name: ${{ parameters.name }}
     - id: write-catalog-info
