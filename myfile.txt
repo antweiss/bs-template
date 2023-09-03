@@ -1,0 +1,6 @@
+{% if enabledDB }
+DB is enabled for {{ name }}
+{% else }
+DB is disabled for {{ name }}
+{% endif }
+
